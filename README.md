@@ -12,9 +12,10 @@ Para lograr lo anterior se utiliza el microcontrolador ESP32, en el cual se apli
 La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolador, en los cuales hay que actualizar la siguiente información:
 - *mpu6050Functions.cpp* [línea 73-112]: Offsets de las IMUs por cada dedo.
 - *mqttFunctions.cpp* [Línea 17.20]: Tópicos suscriptor y publicador, así como usuario y password para el servidor MQTT.
-- *La Función onMqttMessage* [Línea 123]: Aquí se encuentran definidos los códigos de cada una de las instrucciones 
+- *La Función onMqttMessage* [Línea 123]: Aquí se encuentran definidos los códigos de los comandos que puede ejecutar el prototipo. 
+- * aksdmalsdm
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MzQyODI2MjMsMTMyMzA5MzIxOCwxMj
+eyJoaXN0b3J5IjpbLTE5MzAwMzQ0NDgsMTMyMzA5MzIxOCwxMj
 A2OTkwNjkyLDc5NzU2MTY4LC0xMzU1MTI0ODgzXX0=
 -->
