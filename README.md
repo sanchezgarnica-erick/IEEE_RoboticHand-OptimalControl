@@ -2,10 +2,10 @@
 ![Graphic Abstract](https://github.com/sanchezgarnica-erick/IEEE_RoboticHand-OptimalControl/blob/main/ProjectImages/graphicAbstract_v2.png)
 
 The project presented in the article uses:
-- The right arm of the [Inmoov](https://inmoov.fr/), positioning the fingers in a non-linked double tendon arrangement
-- Unidades de Medición Inercial para determinar la posición de los dedos.
--  Servomotores como actuadores para los dedos.
-- Una interfaz para intercambio de mensajes mediante el protocolo MQTT con la finalidad de recibir comandos de voz desde una aplicación web
+- The right arm of the [Inmoov](https://inmoov.fr/), configuring the fingers in a non-linked double tendon arrangement.
+- Inertial Measurement Units to determine the finger positions.
+-  Servo motors as actuators for the fingers.
+- An interface for message exchange using the MQTT protocol to receive voice commands from a web application.
 - El movimiento de los dedos está condicionado por un controlador PI óptimo.
 
 Para lograr lo anterior se utiliza el microcontrolador ESP32, en el cual se aplicaron técnicas de programación multitarea en paralelo.
@@ -25,7 +25,7 @@ La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolad
 - *utils.h* [Línea 4]: Número de pin del sensor de fuerza.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTI5NDMwODM2OCwxNTQ1Mjg0NDEzLDEzMj
+eyJoaXN0b3J5IjpbMjEwMjM5OTU1NCwxNTQ1Mjg0NDEzLDEzMj
 MwOTMyMTgsMTIwNjk5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4
 M119
 -->
