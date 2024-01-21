@@ -24,9 +24,9 @@ To achieve the above, the ESP32 microcontroller is used, applying parallel multi
 - *utils.cpp*, utilsSetup() function: Configuration of the gains for the PID of each finger.
 - *utils.h* [Lines 4]: Pin number of the force sensor.
 
-La aplicación web desarrollada para este artículo, mediante la cual se pueden enviar comandos de voz a la mano, a través del protocolo MQTT, está desarrollada en Java utilizando el Framework Spring. La carpeta *WebApp* contiene los archivos necesario para importar la aplicación como un proyecto Spring/Maven en el STS IDE.
+The web application developed for this article, through which voice commands can be sent to the hand via the MQTT protocol, is developed in Java using the Spring Framework. The *WebApp* folder contains the necessary files to import the application as a Spring/Maven project in the STS IDE.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MzU3MDgxNDksMjc2NzQ0MzQsMTY4OT
-k1Mjg1NCwxNTQ1Mjg0NDEzLDEzMjMwOTMyMTgsMTIwNjk5MDY5
-Miw3OTc1NjE2OCwtMTM1NTEyNDg4M119
+eyJoaXN0b3J5IjpbOTA0MTg5MjQ0LDI3Njc0NDM0LDE2ODk5NT
+I4NTQsMTU0NTI4NDQxMywxMzIzMDkzMjE4LDEyMDY5OTA2OTIs
+Nzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
 -->
