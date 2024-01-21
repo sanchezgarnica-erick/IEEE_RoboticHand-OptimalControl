@@ -44,19 +44,11 @@ public class MqttConfig {
 	
 	private ObjectMapper objectMapper;
 	
-	/*
-	private String username = "WextLna2t1CpRrP";
-	private String password = "2ODW6tIgZTuPpU1";
-	private String esp32InputTopic = "LQfjj1Gu4avGzn7/esp32/input";
-	private String esp32OutputTopic = "LQfjj1Gu4avGzn7/esp32/output";
-	private String url = "tcp://ioticos.org:1883";
-	*/
 	private String username = "sagahand_web";
-	private String password = "M7gcycry8gy3aswFYCRCd5UEAe8Bwt";
+	private String password = "changeme";
 	private String esp32InputTopic = "sagahand/esp32/input";
 	private String esp32OutputTopic = "sagahand/esp32/output";
-	private String url = "tcp://saganet.com.mx:1883"; 
-	//private String url = "tcp://localhost:1883";
+	private String url = "tcp://0.0.0.0:1883";
 	private String sagaLinuxDir = "/sagahand_mqtt";
 	
 	public MqttConfig() {
@@ -70,8 +62,7 @@ public class MqttConfig {
 		options.setUserName(username);
 		options.setPassword(password.toCharArray());
 		try {
-			//mqttClient = new MqttClient(url, MqttClient.generateClientId()); //Windows
-			mqttClient = new MqttClient(url, MqttClient.generateClientId(), new MqttDefaultFilePersistence(sagaLinuxDir)); //Linux SaGaServer
+			mqttClient = new MqttClient(url, MqttClient.generateClientId(), new MqttDefaultFilePersistence(sagaLinuxDir));
 			mqttClient.connect(options);
 			log.debug("cliente MQTT conectado");
 			mqttClient.subscribe(esp32OutputTopic);
@@ -87,13 +78,6 @@ public class MqttConfig {
 	public boolean publish(String message) {
 		MqttMessage mqttMessage;
 		
-		/*
-		if(!mqttClient.isConnected()) {
-			mensajesC.mensajeError("Cliente MQTT no conectado");
-			return false;
-		}
-		*/
-		
 		mqttMessage = new MqttMessage(message.getBytes());
 		mqttMessage.setQos(0);
 		mqttMessage.setRetained(false);
@@ -103,7 +87,6 @@ public class MqttConfig {
 			log.debug("Error al publicar en MQTT");
 			e.printStackTrace();
 		}
-		//mensajesC.mensajeInfo("Mensaje MQTT enviado exitosamente");
 		
 		return true;
 	}
@@ -117,8 +100,6 @@ public class MqttConfig {
 				String payload = message.toString(); 
 				Map<String, Object> map;
 				
-				//log.debug("Mensaje recibido ({}): {}", topic, payload);
-				
 				if(payload.equals(SAGAHAND_CONECTED)) {
 					hand.setActiva(true);
 					hand.setUltimaComunicacion(LocalDateTime.now());
@@ -128,7 +109,6 @@ public class MqttConfig {
 				if(payload.substring(0, 5).equals("info:")) {
 					try {
 					map = objectMapper.readValue(payload.substring(5), Map.class);
-					//log.debug("Map: {}", map);
 					
 					hand.getIndexFinger().setState((double) map.get("indexFingerState"));
 					hand.getIndexFinger().setControl((double) map.get("indexFingerControl"));
@@ -151,7 +131,6 @@ public class MqttConfig {
 					hand.getThumb().setSetPoint((double) map.get("thumbSetPoint"));
 					hand.setUltimaComunicacion(LocalDateTime.now());
 					hand.compute();
-					//log.debug("Hand updated: {}", hand);
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
@@ -193,14 +172,6 @@ public class MqttConfig {
 			
 			@Override
 			public void deliveryComplete(IMqttDeliveryToken token) {
-				/*
-				try {
-					log.debug("Entrega de mensaje completada: {}", token.getMessage().toString());
-				} catch (MqttException e) {
-					log.debug("Error en deliveryComplete");
-					e.printStackTrace();
-				}
-				*/
 			}
 			
 			@Override
@@ -234,7 +205,6 @@ public class MqttConfig {
 		this.hand.getThumb().setSetPoint(hand.getThumb().getSetPoint());
 		this.hand.compute();
 		
-		//log.debug("Actualizando SetPoint ************** {}", this.hand.getTestFinger().getSetPoint());
 		StringBuilder sb;
 		sb = new StringBuilder("s:");
 		sb.append(this.hand.getIndexFinger().getSetPoint());
