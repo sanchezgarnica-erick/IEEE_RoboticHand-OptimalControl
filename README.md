@@ -10,9 +10,10 @@ El proyecto presentado en el artículo utiliza:
 
 Para lograr lo anterior se utiliza el microcontrolador ESP32, en el cual se aplicaron técnicas de programación multitarea en paralelo.
 La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolador, en los cuales hay que actualizar la siguiente información:
-- *mpu6050Functions.cpp*: 
+- *mpu6050Functions.cpp* [línea 73-112]: Offsets de las IMUs por cada dedo.
+- 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU2ODk5NTk0OCwxMzIzMDkzMjE4LDEyMD
-Y5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
+eyJoaXN0b3J5IjpbLTE5MjM2NDI5NzQsMTMyMzA5MzIxOCwxMj
+A2OTkwNjkyLDc5NzU2MTY4LC0xMzU1MTI0ODgzXX0=
 -->
