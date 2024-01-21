@@ -14,18 +14,18 @@ To achieve the above, the ESP32 microcontroller is used, applying parallel multi
 - *mqttFunctions.cpp* [Lines 17-20]: Subscriber and publisher topics, as well as username and password for the MQTT server.
 	* The onMqttMessage* function [Line 123]: This section defines the codes for the commands that the prototype can execute.
 		+ *a*: Sending the current system status.
-		+ *b*: Envío de los valores actuales de las variables.
-		+ *c*: Envío de las ganancias actuales del PID.
-		+ *g*: Activar modo de agarre.
-		+ *h*: Desactivar modo de agarre
-		+ *s*: Recibir el setpoint para cada uno de los dedos.
-		+ *p*: Recibir las nuevas ganancias para el controlar PID de cada uno de los dedos.
-- *mqttFunctions.h* [Lines 13-17]: Nombre y Contraseña del WiFi. Nombre y puerto del servidor MQTT
-- *utils.cpp*, función utilsSetup(): Configuración de las ganancias para el PID de cada uno de los dedos.
-- *utils.h* [Lines 4]: Número de pin del sensor de fuerza.
+		+ *b*: Sending the current values of the variables.
+		+ *c*: Sending the current PID gains.
+		+ *g*: Activating the grip mode.
+		+ *h*: Deactivating the grip mode.
+		+ *s*: Receiving the setpoint for each finger.
+		+ *p*: Receiving the new gains for the PID controller of each finger.
+- *mqttFunctions.h* [Lines 13-17]: WiFi name and password. MQTT server name and port.
+- *utils.cpp*, utilsSetup() function: Configuration of the gains for the PID of each finger.
+- *utils.h* [Lines 4]: Pin number of the force sensor.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMzMTU1NzA1NywxNTQ1Mjg0NDEzLDEzMj
+eyJoaXN0b3J5IjpbMTY4OTk1Mjg1NCwxNTQ1Mjg0NDEzLDEzMj
 MwOTMyMTgsMTIwNjk5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4
 M119
 -->
