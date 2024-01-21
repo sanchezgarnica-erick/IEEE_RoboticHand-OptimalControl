@@ -9,10 +9,9 @@ El proyecto presentado en el artículo utiliza:
 - El movimiento de los dedos está condicionado por un controlador PI óptimo.
 
 Para lograr lo anterior se utiliza el microcontrolador ESP32, en el cual se aplicaron técnicas de programación multitarea en paralelo.
-
-
+La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolador, de los c
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEzNzczODkzNjAsMTMyMzA5MzIxOCwxMj
-A2OTkwNjkyLDc5NzU2MTY4LC0xMzU1MTI0ODgzXX0=
+eyJoaXN0b3J5IjpbMTcwMTE2NTkyNCwxMzIzMDkzMjE4LDEyMD
+Y5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
 -->
