@@ -15,9 +15,12 @@ La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolad
 - *La Función onMqttMessage* [Línea 123]: Aquí se encuentran definidos los códigos de los comandos que puede ejecutar el prototipo. 
 	* *a*: Envío del estatus actual del sistema.
 	* *b*: Envío de los valores actuales de las variables.
-	* *c*: 
+	* *c*: Envío de las ganancias actuales del PID.
+	* *g*: Activar modo de agarre.
+	* *h*: Desactivar modo de agarre
+	* *s*: Recibir el setpoint de 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg5ODE5NjQ1MCwxMzIzMDkzMjE4LDEyMD
-Y5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
+eyJoaXN0b3J5IjpbLTYwNTY3NjMxLDEzMjMwOTMyMTgsMTIwNj
+k5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4M119
 -->
