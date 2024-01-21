@@ -22,8 +22,9 @@ La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolad
 		+ *p*: Recibir las nuevas ganancias para el controlar PID de cada uno de los dedos.
 - *mqttFunctions.h* [Línea 13-17]: Nombre y Contraseña del WiFi. Nombre y puerto del servidor MQTT
 - *utils.cpp*, función utilsSetup(): Configuración de las ganancias para el PID de cada uno de los dedos.
+- *utils.h* [Línea 4]: Número de pin del sensor de fuerza.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzA1OTY5NzA2LDEzMjMwOTMyMTgsMTIwNj
-k5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4M119
+eyJoaXN0b3J5IjpbMTU0NTI4NDQxMywxMzIzMDkzMjE4LDEyMD
+Y5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
 -->
