@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:panel header="Grupos del Sistema">
+                		<p:dataTable value="${modelo.listado}" var="fila"
+                			rowKey="${fila.id}" selection="${modelo.seleccionado}" selectionMode="single"
+                			paginator="true" rows="15" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                			
+                			<p:ajax event="rowSelect" update="${p:resolveFirstComponentWithId('botonEditar', view).clientId} ${p:resolveFirstComponentWithId('botonRoles', view).clientId} ${p:resolveFirstComponentWithId('botonUsuarios', view).clientId}" />
+                		
+                			<p:column headerText="Nombre" width="150"
+                				filterable="true" filterBy="${archivo.nombre}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.nombre}">
+                				<h:outputLabel value="${fila.nombre}" />
+                			</p:column>
+                			
+                			<p:column headerText="Descripción" width="250"
+                				filterable="true" filterBy="${archivo.descripcion}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.descripcion}">
+                				<h:outputLabel value="${fila.descripcion}" />
+                			</p:column>
+                		</p:dataTable>
+                		
+                		<f:facet name="footer">
+                			<p:commandButton value="Agregar" action="agregar" icon="ui-icon-add" style="margin-right: 5px;" />
+                			<p:commandButton id="botonEditar" value="Editar" action="editar" icon="ui-icon-edit" disabled="${modelo.seleccionado == null}" style="margin-right: 5px;" />
+                			<p:commandButton id="botonRoles" value="Roles" action="editarRoles" icon="ui-icon-people" disabled="${modelo.seleccionado == null}" style="margin-right: 5px;" />
+                			<p:commandButton id="botonUsuarios" value="Usuarios" action="editarUsuarios" icon="ui-icon-people" disabled="${modelo.seleccionado == null}" style="margin-right: 5px;" />
+                		</f:facet>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="administracion.gruposRoles">
+	<cache /> 
+	
+	<select id="rolesPorGrupo" parameterType="GrupoEO" resultMap="administracion.roles.rol">
+		SELECT <include refid="administracion.roles.fields" />
+		FROM <include refid="administracion.roles.table" />
+		JOIN administracion.grupos_roles GruposRoles USING(rol)
+		WHERE GruposRoles.id_grupo = #{id}
+		ORDER BY <include refid="administracion.roles.orderByFields" /> 
+	</select>
+	
+	<insert id="insertar" parameterType="hashmap">
+		INSERT INTO administracion.grupos_roles(id_grupo, rol)
+		<foreach collection="roles" open="VALUES" separator="," item="rol">
+			(#{grupo.id}, #{rol.nombre})
+		</foreach>
+	</insert>
+	
+	<delete id="eliminarPorGrupo" parameterType="GrupoEO">
+		DELETE FROM administracion.grupos_roles
+		WHERE id_grupo = #{id}
+	</delete>
+</mapper>

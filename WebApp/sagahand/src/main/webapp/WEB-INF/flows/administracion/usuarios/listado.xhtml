@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:panel id="panelUsuarios" header="Usuarios">
+                		<p:dataTable value="${modelo.listado}" var="fila" 
+                			rowKey="${fila.id}" selection="${modelo.seleccionado}" selectionMode="single"
+                			paginator="true" rows="15" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                		
+                			<p:column headerText="Nick" width="75"
+                				filterable="true" filterBy="#{fila.nick}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${fila.nick}">
+                				<h:outputLabel value="${fila.nick}" />
+                			</p:column>
+                			
+                			<p:column headerText="Nombre" width="150"
+                				filterable="true" filterBy="#{fila.nombre}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${fila.nombre}">
+                				<h:outputLabel value="${fila.nombre}" />
+                			</p:column>
+                			
+                			<p:column headerText="Habilitado" width="75"
+                				filterable="true" filterBy="#{fila.habilitado ? 'Si' : 'No'}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${fila.habilitado ? 'Si' : 'No'}">
+                				<h:outputLabel value="${fila.habilitado ? 'Si' : 'No'}" />
+                			</p:column>
+                		</p:dataTable>
+                		
+                		<f:facet name="footer">
+                			<p:commandButton value="Agregar" action="agregar" icon="ui-icon-add" style="margin-right: 5px;" />
+                			<p:commandButton value="Editar" action="editar" icon="ui-icon-edit" style="margin-right: 5px;" />
+                		</f:facet>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+                
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

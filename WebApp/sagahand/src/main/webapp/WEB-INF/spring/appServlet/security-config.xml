@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<http>
+		<intercept-url pattern="/app/javax.faces.resource/**" access="permitAll" requires-channel="http"/>
+		<intercept-url pattern="/app/login" access="permitAll" requires-channel="http"/>
+		<intercept-url pattern="/**" access="hasRole('USUARIO')" requires-channel="http" />
+		<form-login login-page="/app/login" always-use-default-target="true" default-target-url="/app/" />
+		<logout />
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="UsuariosServ">  
+			<password-encoder ref="bcryptEncoder" />
+		</authentication-provider>
+	</authentication-manager> 
+	
+	<beans:bean id="UsuariosServ" class="edu.uaeh.sagahand.beans.seguridad.UsuariosServ"> 
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="enableAuthorities" value="false" />
+		<beans:property name="enableGroups" value="true" />
+		<beans:property name="usersByUsernameQuery" value="SELECT nick, pw, habilitado FROM administracion.usuarios WHERE nick = ?" />
+		<beans:property name="groupAuthoritiesByUsernameQuery" value="SELECT g.id_grupo, g.grupo, gr.rol FROM administracion.grupos g JOIN administracion.grupos_roles gr using (id_grupo) JOIN administracion.usuarios_grupos ug using (id_grupo) WHERE ug.nick = ?" />
+		<beans:property name="sqlSession" ref="sqlSession" />
+	</beans:bean>
+	
+	<beans:bean name="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+	
+</beans:beans>

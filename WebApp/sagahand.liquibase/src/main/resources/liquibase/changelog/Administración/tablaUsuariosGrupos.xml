@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="TablaUsuariosGruposTag" author="SaGa">
+		<tagDatabase tag="TablaUsuariosGrupos" />
+	</changeSet>
+
+	<changeSet id="TablaUsuariosGrupos" author="SaGa">
+		<comment>
+			Almacena los Grupos a los que pertenecen los Usuarios
+		</comment>
+
+		<createTable schemaName="administracion" tableName="usuarios_grupos" remarks="Grupos a los que pertenecen los Usuarios">
+			<column name="id_usuario_grupo" type="serial" remarks="Identificador Único">
+				<constraints primaryKey="true" primaryKeyName="usuarios_grupos_pk" />
+			</column>
+
+			<column name="nick" type="text" remarks="Nick del Usuario">
+				<constraints nullable="false" foreignKeyName="usuarios_grupos_fk_usuarios" references="administracion.usuarios(nick)" />
+			</column>
+
+			<column name="id_grupo" type="integer" remarks="Identificador del Grupo">
+				<constraints nullable="false" foreignKeyName="usuarios_grupos_fk_grupos" references="administracion.grupos(id_grupo)" />
+			</column>
+		</createTable>
+
+		<createIndex schemaName="administracion" tableName="usuarios_grupos" indexName="usuarios_grupos_ix_nick" >
+			<column name="nick" />
+		</createIndex>
+
+		<createIndex schemaName="administracion" tableName="usuarios_grupos" indexName="usuarios_grupos_ix_id_grupo" >
+			<column name="id_grupo" type="integer" />
+		</createIndex>
+
+	</changeSet>
+
+</databaseChangeLog>

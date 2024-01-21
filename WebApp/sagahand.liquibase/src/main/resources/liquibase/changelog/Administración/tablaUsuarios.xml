@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="TablaUsuariosTag" author="SaGa">
+		<tagDatabase tag="TablaUsuarios" />
+	</changeSet>
+
+	<changeSet id="TablaUsuarios" author="SaGa">
+		<comment>
+			Tabla de Usuarios
+		</comment>
+
+		<createTable schemaName="administracion" tableName="usuarios" remarks="Tabla de Usuarios del Sistema">
+			<column name="id_usuario" type="serial" remarks="Identificador Único">
+				<constraints primaryKey="true" primaryKeyName="usuarios_pk"/>
+			</column>
+			
+			<column name="nick" type="text" remarks="Nick del Usuario">
+				<constraints nullable="false" unique="true" uniqueConstraintName="usuarios_uk_nick"/>
+			</column>
+			
+			<column name="pw" type="text" remarks="Password del Usuario">
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="nombre" type="text" remarks="Nombre del Usuario" >
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="habilitado" type="boolean" remarks="Bandera de Usuario Habilitado" >
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createIndex schemaName="administracion" tableName="usuarios" indexName="usuarios_ix_nick">
+			<column name="nick" />
+		</createIndex>
+
+	</changeSet>
+
+</databaseChangeLog>

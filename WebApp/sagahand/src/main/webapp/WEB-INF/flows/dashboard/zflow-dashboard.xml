@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://saganet.com.mx/webflow/spring-webflow-2.0.xsd">
+	
+	<view-state id="mainPanel">
+		<on-entry>
+			<set name="viewScope.mensaje" value="''" />
+			<set name="viewScope.comando" value="''" />
+			<evaluate expression="MqttConfig.requestPID()" />
+			<evaluate expression="MqttConfig.getHand()" result="viewScope.hand" />
+		</on-entry>
+		<transition on="publish">
+			<evaluate expression="MqttConfig.publish(viewScope.mensaje)" />
+		</transition>
+		
+		<transition on="checkStatus">
+			<evaluate expression="MqttConfig.checkStatus()" />
+		</transition>
+		
+		<transition on="updateStatus">
+			<evaluate expression="MqttConfig.getHand()" result="viewScope.hand" />
+		</transition>
+		
+		<transition on="actualizarSetPoint">
+			<evaluate expression="MqttConfig.updateSetPoint(viewScope.hand)" result="viewScope.hand" />
+		</transition>
+		
+		<transition on="actualizarPID">
+			<evaluate expression="MqttConfig.updatePID(viewScope.hand)" result="viewScope.hand" />
+		</transition>
+		
+		<transition on="ejecutarComando">
+			<evaluate expression="MqttConfig.voiceCommand(viewScope.comando)" />
+		</transition>
+	</view-state>
+	
+</flow>

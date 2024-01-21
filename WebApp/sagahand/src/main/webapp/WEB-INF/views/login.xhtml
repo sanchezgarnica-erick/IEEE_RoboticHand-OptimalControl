@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>SaGaHand</title>
+        <link rel="shortcut icon" href="${request.contextPath}/app/javax.faces.resource/imagenes/favicon.ico"/>
+        <h:outputScript name="js/ripple.js" library="ultima-layout" />
+        <h:outputScript name="js/layout.js" library="ultima-layout" />
+    </h:head>
+
+    <h:body styleClass="login-body">
+        <div class="card login-panel ui-fluid" style="background: white;">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:graphicImage name="images/saganet1.png" library="ultima-layout" width="70%" />
+                </div>
+                <form action="${request.contextPath}/login" method="post">
+                	<p:focus for= "${p:resolveFirstComponentWithId('username', view).clientId}" />
+	                <div class="ui-g-12">
+	                    <h:panelGroup styleClass="md-inputfield">
+	                        <p:inputText id="username" />
+	                        <label>Usuario</label>
+	                    </h:panelGroup>
+	                </div>
+	                <div class="ui-g-12">
+	                    <h:panelGroup styleClass="md-inputfield">
+	                        <p:password id="password" />
+	                        <label>Contraseña</label>
+	                    </h:panelGroup>
+	                </div>
+	                <div class="ui-g-12">
+	                    <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" >
+	                    	<span class="ui-button-icon-left ui-icon ui-c ui-icon-person" />
+	                    	<span class="ui-button-text ui-c">Ingresar</span>
+	                    </button>
+	                    
+	                </div>
+	                
+	                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </form>
+            </div>
+        </div>
+        
+        <div class="login-footer">SaGaHand@UAEH 2021 (v#{ParametrosC.version})</div>
+        
+        <h:form>
+        	<pe:timer timeout="${session.maxInactiveInterval - 60}" ontimercomplete="location.reload()" visible="false" />
+        	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </h:form>
+        
+        <h:outputStylesheet name="css/ripple.css" library="ultima-layout" />
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="ultima-layout" />
+    </h:body>
+
+</html>

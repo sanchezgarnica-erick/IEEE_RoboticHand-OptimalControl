@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:focus for="${usuario.id == null ? p:resolveFirstComponentWithId('inputNick', view).clientId : p:resolveFirstComponentWithId('inputNombre', view).clientId}" />
+                	<p:growl autoUpdate="true" />
+                	<p:panel header="${usuario.id == null ? 'Agregar' : 'Editar'} Usuario">
+                		<p:panel header="Información General">
+                			<p:panelGrid columns="2">
+	                			<p:outputLabel for="@next" value="Nick" style="font-weight: bold;" />
+	                			<p:inputText id="inputNick" value="${usuario.nick}" size="30" disabled="${usuario.id != null}" />
+	                			
+	                			<p:outputLabel for="@next" value="Nombre" style="font-weight: bold;" />
+	                			<p:inputText id="inputNombre" value="${usuario.nombre}" size="30" />
+	                			
+	                			<p:outputLabel for="@next" value="Password" style="font-weight: bold;" rendered="${usuario.id == null}" />
+								<p:password id="pw1" value="${usuario.pw}" feedback="true"
+									match="${p:resolveFirstComponentWithId('pw2', view).clientId}" required="true"
+									validatorMessage="Los Password NO coinciden"
+									strongLabel="Fuerte" weakLabel="Débil" goodLabel="Bueno"
+									promptLabel="Ingrese el Password"
+									requiredMessage="Favor de anotar el Password"
+									rendered="${usuario.id == null}" />
+								
+								<p:outputLabel for="@next" value="Confirmar PW" style="font-weight: bold;" rendered="${usuario.id == null}" />
+	                			<p:password id="pw2" value="${usuario.pw}" rendered="${usuario.id == null}" />
+	                			
+	                			<p:outputLabel for="@next" value="Habilitado" rendered="${usuario.id != null}" />
+	                			<p:inputSwitch value="${usuario.habilitado}" onLabel="Si" offLabel="No" rendered="${usuario.id != null}" />
+	                		</p:panelGrid>
+                		</p:panel>
+                		
+                		<f:facet name="footer">
+                			<p:commandButton value="Guardar" action="guardar" icon="ui-icon-save" style="margin-right: 5px;" />
+                			<p:commandButton value="Cancelar" action="cancelar" icon="ui-icon-clear" immediate="true" style="margin-right: 5px;" />
+                		</f:facet>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

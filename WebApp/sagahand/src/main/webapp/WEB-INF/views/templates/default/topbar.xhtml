@@ -1,0 +1,194 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima"
+    xmlns:sec="http://www.springframework.org/security/tags">
+
+    <div class="topbar clearfix">
+        <div class="topbar-left">            
+            <div class="logo"></div>
+        </div>
+        
+        <div class="topbar-right">
+            <a id="menu-button" href="#">
+                <i></i>
+            </a>
+            
+            <a id="topbar-menu-button" href="#">
+                <i class="material-icons">&#xE5D4;</i>
+            </a>
+            
+<!--             <a href="#" class="rightpanel-btn"> -->
+<!--                 <i class="material-icons">&#xE5D2;</i> -->
+<!--             </a> -->
+
+<!--             <h:form id="topbar-items-form"> -->
+                <ul class="topbar-items fadeInDown animated">
+<ui:remove>
+<!--                     <ui:fragment rendered="#{guestPreferences.profileMode == 'overlay'||guestPreferences.menuLayout == 'menu-layout-static menu-layout-horizontal'}"> -->
+<!--                         <li class="profile-item"> -->
+<!--                             <a href="#">                             -->
+<!--                                 <div class="profile-image"></div> -->
+<!--                                 <span class="topbar-item-name">Jane Williams</span> -->
+<!--                             </a> -->
+                            
+<!--                             <ul class="ultima-menu animated"> -->
+<!--                                 <li role="menuitem"> -->
+<!--                                     <a href="#"> -->
+<!--                                         <i class="material-icons">&#xE7FD;</i> -->
+<!--                                         <span>Profile</span> -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li role="menuitem"> -->
+<!--                                     <a href="#"> -->
+<!--                                         <i class="material-icons">&#xE32A;</i> -->
+<!--                                         <span>Privacy</span> -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li role="menuitem"> -->
+<!--                                     <a href="#"> -->
+<!--                                         <i class="material-icons">&#xE8B9;</i> -->
+<!--                                         <span>Settings</span> -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                                 <li role="menuitem"> -->
+<!--                                     <a href="#"> -->
+<!--                                         <i class="material-icons">&#xE8AC;</i> -->
+<!--                                         <span>Logout</span> -->
+<!--                                     </a> -->
+<!--                                 </li> -->
+<!--                             </ul> -->
+<!--                         </li> -->
+<!--                     </ui:fragment> -->
+</ui:remove>
+                    <li>
+                    	<sec:authorize ifAnyGranted="ROLE_ADMINISTRACION">
+	                        <a href="#">
+	                            <i class="topbar-icon material-icons">&#xE8B8;</i>
+	                            <span class="topbar-item-name">Configuración</span>
+	                        </a>
+	                        <ul class="ultima-menu animated">
+									<li role="menuitem"><a
+										href="${request.contextPath}/app/administracion/usuarios" onclick="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' });"> <i
+											class="material-icons">&#xE7EF;</i> <span>Usuarios</span>
+									</a></li>
+									<li role="menuitem"><a
+										href="${request.contextPath}/app/administracion/roles" onclick="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' });"> <i
+											class="material-icons">&#xE7EF;</i> <span>Roles</span>
+									</a></li>
+									<li role="menuitem"><a
+										href="${request.contextPath}/app/administracion/grupos" onclick="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' });"> <i
+											class="material-icons">&#xE7EF;</i> <span>Grupos</span>
+									</a></li>
+
+<ui:remove>								
+<!-- 								<li role="menuitem"> -->
+<!-- 	                                <a href="${request.contextPath}/app/administracion/cambiarPassword" class="ripplelink"> -->
+<!-- 	                                    <i class="material-icons">vpn_key</i> -->
+<!-- 	                                    <span>Cambiar Password</span> -->
+<!-- 	                                </a> -->
+<!-- 	                            </li> -->
+	                            
+<!-- 								<li role="menuitem"> -->
+<!-- 									<a href="#" onclick="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' }); document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').action='${request.contextPath}/logout'; document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').submit();"> -->
+<!-- 	                                    <i class="material-icons">&#xE8AC;</i> -->
+<!-- 	                                    <span>Salir</span> -->
+<!-- 	                                </a> -->
+<!-- 	                            </li> -->
+</ui:remove>
+	                        </ul>
+                        </sec:authorize>
+                    </li>
+<ui:remove>
+<!--                     <li> -->
+<!--                         <a href="#"> -->
+<!--                             <i class="topbar-icon material-icons animated swing">&#xE0C9;</i> -->
+<!--                             <span class="topbar-badge animated rubberBand">5</span> -->
+<!--                             <span class="topbar-item-name">Messages</span> -->
+<!--                         </a> -->
+<!--                         <ul class="ultima-menu animated"> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#" class="topbar-message"> -->
+<!--                                     <p:graphicImage name="images/avatar1.png" library="ultima-layout" width="35"/> -->
+<!--                                     <span>Give me a call</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#" class="topbar-message"> -->
+<!--                                     <p:graphicImage name="images/avatar2.png" library="ultima-layout" width="35"/> -->
+<!--                                     <span>Sales reports attached</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#" class="topbar-message"> -->
+<!--                                     <p:graphicImage name="images/avatar3.png" library="ultima-layout" width="35"/> -->
+<!--                                     <span>About your invoice</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#" class="topbar-message"> -->
+<!--                                     <p:graphicImage name="images/avatar2.png" library="ultima-layout" width="35"/> -->
+<!--                                     <span>Meeting today at 10pm</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#" class="topbar-message"> -->
+<!--                                     <p:graphicImage name="images/avatar4.png" library="ultima-layout" width="35"/> -->
+<!--                                     <span>Out of office</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                         <a href="#"> -->
+<!--                             <i class="topbar-icon material-icons">&#xE425;</i> -->
+<!--                             <span class="topbar-badge animated rubberBand">4</span> -->
+<!--                             <span class="topbar-item-name">Notifications</span> -->
+<!--                         </a> -->
+<!--                         <ul class="ultima-menu animated"> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="material-icons">&#xE868;</i> -->
+<!--                                     <span>Pending tasks</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="material-icons">&#xE878;</i> -->
+<!--                                     <span>Meeting today at 3pm</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="material-icons">&#xE2C4;</i> -->
+<!--                                     <span>Download documents</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li role="menuitem"> -->
+<!--                                 <a href="#"> -->
+<!--                                     <i class="material-icons">&#xE539;</i> -->
+<!--                                     <span>Book flight</span> -->
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                     </li> -->
+<!--                     <li class="search-item"> -->
+<!--                         <h:panelGroup styleClass="md-inputfield"> -->
+<!--                             <p:inputText onkeypress="if (event.keyCode == 13) {return false;}"/> -->
+<!--                             <label>Search</label> -->
+<!--                             <i class="topbar-icon material-icons">&#xE8B6;</i> -->
+<!--                         </h:panelGroup> -->
+                        
+<!--                     </li> -->
+</ui:remove>
+                </ul>
+<ui:remove>
+<!--             </h:form> -->
+</ui:remove>
+        </div>
+    </div>
+
+</ui:composition>

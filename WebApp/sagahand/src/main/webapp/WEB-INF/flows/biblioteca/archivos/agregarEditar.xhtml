@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                <p:growl>
+                	<p:autoUpdate></p:autoUpdate>
+                </p:growl>
+            		<p:focus for="${p:resolveFirstComponentWithId('inputDescripcion', view).clientId}" />
+            		<p:panel header="Agregar Archivo">
+            			<p:panelGrid columns="2">
+            				<p:outputLabel value="Descripción" style="font-weight: bold" />
+            				<p:inputText id="inputDescripcion" value="#{archivo.descripcion}" size="50" />
+							<p:outputLabel value="Archivo" style="font-weight: bold" />
+							<p:outputPanel id="panelArchivo">
+								<p:fileUpload listener="${archivo.uploadFile}"
+									fileLimit="1" required="true" label="Buscar" immediate="true"
+									uploadLabel="Cargar" cancelLabel="Cancelar"
+									update="${p:resolveFirstComponentWithId('panelArchivo', view).clientId} ${p:resolveFirstComponentWithId('botonGuardar', view).clientId}"
+									rendered="${!archivo.upload}" />
+								<p:outputLabel value="${archivo.upload ? 'Archivo '.concat(archivo.nombre).concat(' cargado exitosamente') : ''}" />
+							</p:outputPanel>
+						</p:panelGrid>
+
+						<f:facet name="footer">
+            				<p:commandButton id="botonGuardar" value="Guardar" action="guardar" icon="ui-icon-save" disabled="${!archivo.upload}" />
+            				<p:commandButton value="Cancelar" action="cancelar" icon="ui-icon-clear" immediate="true" />
+            			</f:facet>
+            		</p:panel>
+            		
+            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

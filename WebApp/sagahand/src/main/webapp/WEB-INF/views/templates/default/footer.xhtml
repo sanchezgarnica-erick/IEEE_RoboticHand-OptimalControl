@@ -1,0 +1,31 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+    
+    <div class="footer">
+        <div class="card clearfix">
+            <span class="footer-text-left">SaGaHand (Sistema de Control de Prótesis)</span>
+            <span class="footer-text-right"><span class="ui-icon ui-icon-copyright"></span>  <span>SaGaHand@UAEH 2021 (v${ParametrosC.version})</span></span>
+        </div>
+    </div>
+    
+    <h:form>
+    	<pe:timer widgetVar="timeoutWV" timeout="${session.maxInactiveInterval - 60}" ontimercomplete="PF('dialogoTimeoutWV').show(); PF('timeout2WV').start()" visible="false" />
+    	<pe:timer id="timeout2" widgetVar="timeout2WV" timeout="45" autoStart="false" visible="false" 
+			oncomplete="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' }); document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').action='${request.contextPath}/logout'; document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').submit();" />
+
+		<p:dialog id="dialogoTimeout" widgetVar="dialogoTimeoutWV" header="La Sesión está por expirar" modal="true" closable="false" closeOnEscape="false">
+    		<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+    			<h:outputText value="Si continúa trabajando de click en el botón Renovar" />
+    			<h:outputText value="De lo contrario la aplicación terminará" />
+    			<p:commandButton value="Renovar" onclick="PF('timeoutWV').restart(); PF('timeout2WV').stop(true); PF('dialogoTimeoutWV').hide();" />
+    		</p:panelGrid>
+    	</p:dialog>
+    	
+    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </h:form>
+</ui:composition>

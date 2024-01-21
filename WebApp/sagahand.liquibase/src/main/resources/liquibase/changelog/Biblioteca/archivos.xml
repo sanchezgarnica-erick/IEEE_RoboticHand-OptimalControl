@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="ArchivosTag" author="SaGa">
+		<tagDatabase tag="Archivos" />
+	</changeSet>
+
+	<changeSet id="Archivos" author="SaGa">
+		<comment>
+			Estructura de tablas para almacenar Archivos
+		</comment>
+		
+<!-- 		Tabla de Archivos -->
+		<createTable schemaName="biblioteca" tableName="archivos">
+			<column name="id_archivo" type="serial">
+				<constraints primaryKey="true" primaryKeyName="archivos_pk"/>
+			</column>
+			
+			<column name="nombre" type="text">
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="tipo_mime" type="text">
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="objeto" type="bytea">
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="descripcion" type="text" />
+		</createTable>
+		
+<!-- 		Tabla de relaciones entre Archivos y Objetos -->
+		<createTable schemaName="biblioteca" tableName="archivos_objetos">
+			<column name="id_archivo_objeto" type="serial">
+				<constraints primaryKey="true" primaryKeyName="archivos_objetos_pk"/>
+			</column>
+			
+			<column name="id_archivo" type="integer">
+				<constraints nullable="false" foreignKeyName="archivos_objetos_fk_archivos" references="biblioteca.archivos(id_archivo)" deleteCascade="true"/>
+			</column>
+			
+			<column name="id_objeto" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			
+			<column name="tipo_objeto" type="text">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createIndex schemaName="biblioteca" tableName="archivos_objetos" indexName="archivos_objetos_ix_archivos">
+			<column name="id_archivo" type="integer" />
+		</createIndex>
+		
+		<createIndex schemaName="biblioteca" tableName="archivos_objetos" indexName="archivos_objetos_ix_objetos">
+			<column name="id_objeto" type="integer" />
+		</createIndex>
+		
+		<createIndex schemaName="biblioteca" tableName="archivos_objetos" indexName="archivos_objetos_ix_tipo_objeto">
+			<column name="tipo_objeto" type="text" />
+		</createIndex>
+		
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="biblioteca.archivos">
+	<cache />
+	
+	<resultMap type="ArchivoEO" id="archivo">
+		<id column="ArchivoEO_id" property="id" javaType="Integer"/>
+		<result column="ArchivoEO_nombre" property="nombre" javaType="String"/>
+		<result column="ArchivoEO_tipoMime" property="tipoMime" javaType="TiposMimeDO"/>
+		<result column="ArchivoEO_descripcion" property="descripcion" javaType="String"/>
+	</resultMap>
+	
+	<sql id="fields">
+		ArchivoEO.id_archivo 		ArchivoEO_id, 
+		ArchivoEO.nombre 			ArchivoEO_nombre, 
+		ArchivoEO.tipo_mime 		ArchivoEO_tipoMime,
+		ArchivoEO.descripcion 		ArchivoEO_descripcion
+	</sql>
+	
+	<sql id="table">
+		biblioteca.archivos ArchivoEO
+	</sql>
+	
+	<sql id="query">
+		SELECT 
+			<include refid="fields" />
+		FROM <include refid="table" />
+		JOIN biblioteca.archivos_objetos ArchivosObjetos USING(id_archivo)
+	</sql>
+	
+	<sql id="orderByFields">
+		ArchivoEO_nombre
+	</sql>
+	
+	<select id="listado" parameterType="hashmap" resultMap="archivo">
+		<include refid="query" />
+		WHERE ArchivosObjetos.tipo_objeto = #{tipoObjeto} AND ArchivosObjetos.id_objeto = #{objeto.id}
+		ORDER BY <include refid="orderByFields" />
+	</select>
+	
+	<select id="obtenerObjeto" parameterType="ArchivoEO" resultType="_byte[]">
+		SELECT ArchivoEO.objeto
+		FROM <include refid="table" />
+		WHERE ArchivoEO.id_archivo = #{id}
+	</select>
+	
+	<insert id="insertar" parameterType="hashmap">
+		<selectKey keyProperty="archivo.id" resultType="Integer" order="BEFORE">
+			SELECT nextval('biblioteca.archivos_id_archivo_seq'::regclass)
+		</selectKey>
+		INSERT INTO biblioteca.archivos(id_archivo, nombre, tipo_mime, objeto, descripcion)
+		VALUES (#{archivo.id}, #{archivo.nombre}, #{archivo.tipoMime}, #{archivo.objeto}, #{archivo.descripcion})
+	</insert>
+	
+	<insert id="insertarRelacion" parameterType="hashmap">
+		INSERT INTO biblioteca.archivos_objetos(id_archivo, tipo_objeto, id_objeto)
+		VALUES (#{archivo.id}, #{tipoObjeto}, #{objeto.id});
+	</insert>
+	
+	<delete id="eliminar" parameterType="ArchivoEO">
+		DELETE FROM biblioteca.archivos
+		WHERE id_archivo = #{id};
+	</delete>
+</mapper>

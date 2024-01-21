@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml"> 
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                	 <p:panel styleClass="companyHeaderGrid">
+							<table style="width: -webkit-fill-available!important;">
+								<tr>
+									<td colspan="6" style="padding: 25px 0px 10px 50px;">
+										<h1>Bienvenid@ ${request.userPrincipal.principal.usuario.nombre}</h1>
+					                    <h2>SaGaHand</h2>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6" style="padding: 25px 0px 10px 50px; text-align: center">
+                    					<p:graphicImage name="images/saganet1.png" library="ultima-layout" width="200"/>
+									</td>
+								</tr>
+							</table>
+                    </p:panel>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

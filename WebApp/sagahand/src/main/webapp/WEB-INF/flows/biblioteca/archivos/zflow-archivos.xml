@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://saganet.com.mx/webflow/spring-webflow-2.0.xsd">
+	
+	<on-start>
+		<evaluate expression="ArchivosC.iniciar()" />
+	</on-start>
+	
+	<view-state id="listado">
+		<on-entry>
+			<evaluate expression="ArchivosC.modelo(flowScope.tipoObjeto, flowScope.objeto)" result="viewScope.modelo" />
+			<evaluate expression="ArchivosC.cargarObjeto(viewScope.modelo.seleccionado)" />
+		</on-entry>
+		
+		<transition on="cargarObjeto">
+			<evaluate expression="ArchivosC.cargarObjeto(viewScope.modelo.seleccionado)" />
+		</transition>
+		
+		<transition on="agregar" to="agregarEditar">
+			<evaluate expression="ArchivosC.nuevo()" result="requestScope.archivo" />
+		</transition>
+		
+		<transition on="eliminar">
+			<evaluate expression="ArchivosC.eliminar(viewScope.modelo.seleccionado)" />
+			<evaluate expression="ArchivosC.modelo(flowScope.tipoObjeto, flowScope.objeto)" result="viewScope.modelo" />
+			<evaluate expression="ArchivosC.cargarObjeto(viewScope.modelo.seleccionado)" />
+		</transition>
+	</view-state>
+	
+	<view-state id="agregarEditar">
+		<on-entry>
+			<set name="viewScope.archivo" value="requestScope.archivo" />
+		</on-entry>
+		
+		<transition on="guardar" to="listado">
+			<evaluate expression="ArchivosC.guardar(viewScope.archivo, flowScope.tipoObjeto, flowScope.objeto)" />
+		</transition>
+		<transition on="cancelar" to="listado" />
+	</view-state>
+	
+	<end-state id="terminarFlujo" />
+	
+	<global-transitions>
+		<transition on="terminarFlujo" to="terminarFlujo" />
+	</global-transitions>
+</flow>

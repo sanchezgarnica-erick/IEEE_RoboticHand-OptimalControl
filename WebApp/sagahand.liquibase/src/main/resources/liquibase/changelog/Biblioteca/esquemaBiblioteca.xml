@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="EsquemaBibliotecaTag" author="SaGa">
+		<tagDatabase tag="EsquemaBiblioteca" />
+	</changeSet>
+
+	<changeSet id="EsquemaBiblioteca" author="SaGa">
+		<comment>
+			Crear esquema Biblioteca
+		</comment>
+
+		<sql dbms="postgresql">
+			CREATE SCHEMA biblioteca;
+		</sql>
+
+		<rollback>
+			<sql dbms="postgresql">
+				DROP SCHEMA biblioteca CASCADE;
+			</sql>
+		</rollback>
+
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:panel id="panelArchivo">
+            			<f:facet name="header">
+            				<p:outputLabel value="Listado de Archivos" />
+           					<h:panelGroup >
+           						<br />
+	           					<p:outputLabel value="${tipoObjeto.nombre}: ${objeto.nombreBiblioteca}" style="font-weight: bold" />
+           					</h:panelGroup>
+            			</f:facet>
+            			
+            			<p:dataTable value="${modelo.listado}" var="archivo" emptyMessage="Sin Resultados"
+            				rowKey="${archivo.id}" selection="${modelo.seleccionado}" selectionMode="single"
+            				rows="15" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+            				
+            				<p:ajax event="rowSelect" onstart="cargarObjeto()" />
+            				
+            				<p:column headerText="Data" rendered="false">
+            					<h:outputText value="${archivo}" />
+            				</p:column>
+            				
+            				<p:column headerText="Descripción" width="350"
+            					filterable="true" filterBy="${archivo.descripcion}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.descripcion}">
+            					<p:outputLabel value="${archivo.descripcion}" />
+            				</p:column>
+            				
+            				<p:column headerText="Formato" width="150"
+            					filterable="true" filterBy="${archivo.tipoMime.nombre}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.tipoMime.nombre}">
+            					<p:outputLabel value="${archivo.tipoMime.nombre}" />
+            				</p:column>
+            				
+            			</p:dataTable>
+            			
+            			<f:facet name="footer">
+							<p:commandButton value="Agregar" action="agregar"
+								icon="ui-icon-add" />
+							<p:commandButton id="botonEliminar" value="Eliminar"
+								icon="ui-icon-remove" 
+								action="eliminar" update="${p:resolveFirstComponentWithId('panelArchivo', view).clientId}"
+								disabled="${modelo.seleccionado == null}">
+								<p:confirm header="Eliminar Archivo" message="Esta acción no se puede deshacer" icon="ui-icon-alert" />	
+							</p:commandButton>
+							<p:commandButton id="botonDescargar" value="Descargar"
+								icon="ui-icon-cloud-download"
+								disabled="${modelo.seleccionado == null}" ajax="false"  >
+								<p:fileDownload value="${modelo.seleccionado.streamedContent}" />
+							</p:commandButton>
+							
+							<p:commandButton value="Regresar" action="terminarFlujo" icon="ui-icon-keyboard-return" rendered="${botonSalir}" />
+						</f:facet>
+            		</p:panel>
+
+					<p:remoteCommand name="cargarObjeto" action="cargarObjeto"
+						update="${p:resolveFirstComponentWithId('botonDescargar', view).clientId} ${p:resolveFirstComponentWithId('botonEliminar', view).clientId}" />
+						
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+                
+                <h:form>
+					<p:dialog widgetVar="dialogoEliminarWV" header="Eliminar archivo"
+						visible="false" modal="true" closable="true" closeOnEscape="true">
+						<p:outputLabel
+							value="¿Está seguro que quiere eliminar el archivo?" />
+						<br />
+						<p:outputLabel value="Esta acción no se puede deshacer"
+							style="color: red;" />
+
+						<f:facet name="footer">
+							<p:commandButton value="Si" 
+								icon="ui-icon-check" 
+								oncomplete="PF('dialogoEliminarWV').hide()" />
+							<p:commandButton value="No" icon="ui-icon-clear"
+								oncomplete="PF('dialogoEliminarWV').hide()" />
+						</f:facet>
+					</p:dialog>
+					
+					<p:confirmDialog global="true">
+						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+					
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            	</h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

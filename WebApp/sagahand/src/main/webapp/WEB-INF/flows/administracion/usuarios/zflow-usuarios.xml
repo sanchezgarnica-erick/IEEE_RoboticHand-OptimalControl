@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://saganet.com.mx/webflow/spring-webflow-2.0.xsd">
+
+	<view-state id="listado">
+		<on-entry>
+			<evaluate expression="UsuariosC.modelo()" result="viewScope.modelo" />
+		</on-entry>
+		
+		<transition on="agregar" to="agregarEditar">
+			<evaluate expression="UsuariosC.nuevo()" result="requestScope.usuario" />
+		</transition>
+		
+		<transition on="editar" to="agregarEditar">
+			<set name="requestScope.usuario" value="viewScope.modelo.seleccionado" />
+		</transition>
+		
+		<transition on="guardar">
+			<evaluate expression="UsuariosC.guardar(viewScope.modelo.seleccionado)" />
+		</transition>
+	</view-state>
+	
+	<view-state id="agregarEditar">
+		<on-entry>
+			<set name="viewScope.usuario" value="requestScope.usuario" />
+		</on-entry>
+		
+		<transition on="guardar" to="terminarFlujo">
+			<evaluate expression="UsuariosC.guardar(viewScope.usuario)" />
+		</transition>
+		
+		<transition on="cancelar" to="listado" />
+	</view-state>
+	
+	<end-state id="terminarFlujo" />
+
+</flow>

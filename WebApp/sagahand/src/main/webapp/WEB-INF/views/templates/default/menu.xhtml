@@ -1,0 +1,60 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu #{guestPreferences.menuClass}">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                        <div class="profile">
+                            <div class="profile-image"></div>
+                            <a id="profile-options" href="#">
+                                <span class="profile-name">${request.userPrincipal.principal.usuario.nombre}</span>
+                                <i class="material-icons">&#xE313;</i>
+                            </a>
+                        </div> 
+                    
+                        <ul id="profile-menu" class="ultima-menu">
+                            <li role="menuitem">
+                                <a href="${request.contextPath}/app/administracion/cambiarPassword" class="ripplelink">
+                                    <i class="material-icons">vpn_key</i>
+                                    <span>Cambiar Contraseña</span>
+                                </a>
+                            </li>
+                            <li role="menuitem">
+								<a href="#" onclick="PF('me').clearMenuState(); $.removeCookie('ultima_inlineprofile_expanded', { path: '/' }); document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').action='${request.contextPath}/logout'; document.getElementById('${p:resolveFirstComponentWithId('menuform', view).clientId}').submit();">
+                                    <i class="material-icons">&#xE8AC;</i>
+                                    <span>Salir</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </ui:fragment>
+                    
+                    <pu:menu widgetVar="me">
+                    	<p:menuitem id="miHome" value="Inicio" url="${request.contextPath}/app/"/>
+                        
+                        <p:submenu label="Biblioteca">
+                       		<p:menuitem value="Archivos (Usuario)" url="${request.contextPath}/app/biblioteca/archivos" />
+                        </p:submenu>
+                        
+                        <p:menuitem value="Dashboard" url="${request.contextPath}/app/dashboard" />
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+        
+        <h:outputStylesheet>
+        	.profile-image {
+        		background: url("#{resource['ultima-layout:images/saganet1.png']}") top left no-repeat !important;
+        		background-size: 60px 60px !important;
+        	}
+        </h:outputStylesheet>
+        
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </h:form>
+</ui:composition>

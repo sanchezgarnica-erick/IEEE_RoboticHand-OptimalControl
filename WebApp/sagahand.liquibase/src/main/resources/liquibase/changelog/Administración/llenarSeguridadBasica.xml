@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="llenarSeguridadBasicaTag" author="SaGa">
+		<tagDatabase tag="llenarSeguridadBasica" />
+	</changeSet>
+
+	<changeSet id="llenarSeguridadBasica" author="SaGa">
+		<comment>
+			Registros de Seguridad Básica
+		</comment>
+
+		<!-- Usuarios -->
+		<insert schemaName="administracion" tableName="usuarios" dbms="postgresql">
+			<column name="nick" value="admin" />
+			<column name="nombre" value="Sistema" />
+			<column name="pw" valueComputed="crypt('SaGaHand2024', gen_salt('bf', 8))" />
+			<column name="habilitado" valueBoolean="true" />
+		</insert>
+
+		<!-- Roles -->
+		<insert schemaName="administracion" tableName="roles" dbms="postgresql">
+			<column name="rol" value="ROLE_USUARIO" />
+			<column name="descripcion" value="Permite el Acceso al Sistema" />
+		</insert>
+		
+		<insert schemaName="administracion" tableName="roles" dbms="postgresql">
+			<column name="rol" type="text" value="ROLE_ADMINISTRACION" />
+			<column name="descripcion" type="text" value="Acceso al Módulo de Administración" />
+		</insert>
+
+		<!-- Grupos -->
+		<insert schemaName="administracion" tableName="grupos"
+			dbms="postgresql">
+			<column name="id_grupo" valueNumeric="1" />
+			<column name="grupo" value="Administradores" />
+			<column name="descripcion" value="Administradores del Sistema" />
+		</insert>
+
+		<!-- GruposRoles -->
+		<insert schemaName="administracion" tableName="grupos_roles"
+			dbms="postgresql">
+			<column name="id_grupo" valueNumeric="1" />
+			<column name="rol" value="ROLE_USUARIO" />
+		</insert>
+		
+		<insert schemaName="administracion" tableName="grupos_roles"
+			dbms="postgresql">
+			<column name="id_grupo" valueNumeric="1" />
+			<column name="rol" value="ROLE_ADMINISTRACION" />
+		</insert>
+
+		<!-- GruposUsuarios -->
+		<insert schemaName="administracion" tableName="usuarios_grupos"
+			dbms="postgresql">
+			<column name="nick" value="admin" />
+			<column name="id_grupo" valueNumeric="1" />
+		</insert>
+
+		<!-- Roolback -->
+		<rollback>
+			<delete schemaName="administracion"
+				tableName="usuarios_grupos">
+				<where>
+					id_grupo = 1 and nick = 'admin'
+				</where>
+			</delete>
+
+			<delete schemaName="administracion" tableName="grupos_roles">
+				<where>
+					id_grupo = 1 and rol in ('ROLE_USUARIO', 'ROLE_ADMINISTRACION')
+				</where>
+			</delete>
+
+			<delete schemaName="administracion" tableName="grupos">
+				<where>
+					id_grupo = 1
+				</where>
+			</delete>
+
+			<delete schemaName="administracion" tableName="roles">
+				<where>
+					rol in ('ROLE_USUARIO', 'ROLE_ADMINISTRACION')
+				</where>
+			</delete>
+
+			<delete schemaName="administracion" tableName="usuarios">
+				<where>
+					nick = 'admin'
+				</where>
+			</delete>
+		</rollback>
+
+	</changeSet>
+
+</databaseChangeLog>

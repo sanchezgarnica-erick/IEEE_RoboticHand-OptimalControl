@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:growl autoUpdate="true" />
+                	<p:panel id="panelRoles" header="Editar Roles del Grupo: ${grupo.nombre}">
+                		<p:dataTable value="${modeloRolesGrupo.listado}" var="fila"
+                			rowKey="${fila.id}" selection="${modeloRolesGrupo.seleccionado}" selectionMode="single"
+                			paginator="true" rows="15" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                			
+                			<p:ajax event="rowSelect" update="${p:resolveFirstComponentWithId('botonEliminar', view).clientId}" />
+                			
+                			<p:column headerText="Nombre" width="150"
+                				filterable="true" filterBy="${archivo.nombre}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.nombre}">
+                				<p:outputLabel value="${fila.nombre}" />
+                			</p:column>
+                			
+                			<p:column headerText="Descripción" width="250"
+                				filterable="true" filterBy="${archivo.descripcion}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${archivo.descripcion}">
+                				<p:outputLabel value="${fila.descripcion}" />
+                			</p:column>
+                		</p:dataTable>
+                		
+                		<f:facet name="footer">
+                			<p:commandButton value="Guardar" action="guardar" icon="ui-icon-save" style="margin-right: 5px;" />
+                			<p:commandButton value="Agregar" onclick="PF('dialogoRolesWV').show()" icon="ui-icon-add" style="margin-right: 5px;" />
+                			<p:commandButton id="botonEliminar" value="Eliminar" action="eliminarRol"
+								update="${p:resolveFirstComponentWithId('panelRoles', view).clientId} ${p:resolveFirstComponentWithId('dialogoRoles', view).clientId}"
+								disabled="${modeloRolesGrupo.seleccionado == null}"
+								icon="ui-icon-delete" style="margin-right: 5px;">
+								<p:confirm header="Eliminar Rol del Grupo"
+									message="Esta acción no se puede deshacer" icon="ui-icon-alert" />
+							</p:commandButton>
+                			<p:commandButton value="Cancelar" action="cancelar" icon="ui-icon-clear" immediate="true" style="margin-right: 5px;" />
+                		</f:facet>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+                
+                <h:form>
+                	<p:dialog id="dialogoRoles" widgetVar="dialogoRolesWV" header="Agregar Rol al Grupo" modal="true">
+                		<p:panelGrid columns="2">
+                			<p:outputLabel value="Rol" style="font-weight: bold;"/>
+                			<p:selectOneMenu value="${modeloRoles.seleccionado}" converter="ObjectConverter">
+                				<f:selectItems value="${modeloRoles.listado}" var="r" itemLabel="${r.descripcion} (${r.nombre})" itemValue="${r}" />
+                			</p:selectOneMenu>
+                		</p:panelGrid>
+                		
+                		<f:facet name="footer">
+							<p:commandButton value="Agregar" action="agregarRol"
+								oncomplete="PF('dialogoRolesWV').hide()" 
+								update="${p:resolveFirstComponentWithId('panelRoles', view).clientId} ${p:resolveFirstComponentWithId('dialogoRoles', view).clientId}"
+								disabled="${modeloRoles.listado.isEmpty()}"
+								icon="ui-icon-add"
+								style="margin-right: 5px;" />
+							<p:commandButton value="Cancelar"
+								oncomplete="PF('dialogoRolesWV').hide()" icon="ui-icon-cancel"
+								style="margin-right: 5px;" />
+						</f:facet>
+                	</p:dialog>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+                
+                <h:form>
+					<p:confirmDialog global="true">
+						<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+					
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

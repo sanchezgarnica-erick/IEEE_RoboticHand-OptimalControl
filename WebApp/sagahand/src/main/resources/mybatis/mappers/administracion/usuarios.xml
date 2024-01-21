@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="administracion.usuarios">
+	<cache />
+	
+	<resultMap type="UsuarioEO" id="usuario">
+		<id column="UsuarioEO_id" property="id" javaType="Integer"/>
+		<result column="UsuarioEO_nick" property="nick" javaType="String"/>
+		<result column="UsuarioEO_nombre" property="nombre" javaType="String"/>
+		<result column="UsuarioEO_habilitado" property="habilitado" javaType="Boolean"/>
+	</resultMap>
+	
+	<sql id="fields">
+		UsuarioEO.nick 							UsuarioEO_nick, 
+		UsuarioEO.habilitado 					UsuarioEO_habilitado, 
+		UsuarioEO.nombre 						UsuarioEO_nombre,
+		UsuarioEO.id_usuario 					UsuarioEO_id
+	</sql>
+	
+	<sql id="table">
+		administracion.usuarios UsuarioEO
+	</sql>
+	
+	<sql id="query">
+		SELECT <include refid="fields" />
+		FROM <include refid="table" />
+	</sql>
+	
+	<sql id="orderByFields">
+		UsuarioEO_nick
+	</sql>
+	
+	<select id="listado" resultMap="usuario">
+		<include refid="query" />
+		ORDER BY <include refid="orderByFields" />
+	</select>
+	
+	<select id="porNick" parameterType="String" resultMap="usuario">
+		<include refid="query" />
+		WHERE UsuarioEO.nick = #{value}
+	</select>
+	
+	<select id="comprobarPassword" parameterType="UsuarioEO" resultType="Boolean">
+		SELECT pw = crypt(#{actual}, pw) respuesta
+		FROM administracion.usuarios
+		WHERE nick = #{usuario.nick}
+	</select>
+	
+	<insert id="insertar" parameterType="UsuarioEO">
+		INSERT INTO administracion.usuarios(nick, pw, habilitado, nombre)
+		VALUES (lower(#{nick}), crypt(#{pw}, gen_salt('bf', 8)), #{habilitado}, #{nombre});
+	</insert>
+	
+	<update id="actualizar" parameterType="UsuarioEO">
+		UPDATE administracion.usuarios
+		SET habilitado = #{habilitado}, nombre = #{nombre}
+		WHERE id_usuario = #{id}
+	</update>
+	
+	<update id="cambiarPassword" parameterType="hashmap">
+		UPDATE administracion.usuarios
+		SET pw = crypt(#{nueva}, gen_salt('bf', 8))
+		WHERE nick = #{usuario.nick}
+	</update>
+	
+</mapper>
+

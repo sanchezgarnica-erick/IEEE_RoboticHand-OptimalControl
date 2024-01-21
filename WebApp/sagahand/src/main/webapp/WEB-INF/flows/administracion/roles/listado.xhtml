@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:panel header="Roles del Sistema">
+                		<p:dataTable value="${modelo.listado}" var="fila">
+                			<p:column headerText="Nombre" width="150"
+                				filterable="true" filterBy="#{fila.nombre}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${fila.nombre}">
+                				<p:outputLabel value="${fila.nombre}" />
+                			</p:column>
+                			
+                			<p:column headerText="Descripción" width="250"
+                				filterable="true" filterBy="#{fila.descripcion}" filterMatchMode="contains" filterStyle="width:90%"
+            					sortable="true" sortBy="${fila.descripcion}">
+                				<p:outputLabel value="${fila.descripcion}" />
+                			</p:column>
+                		</p:dataTable>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="TablaGruposRolesTag" author="SaGa">
+		<tagDatabase tag="TablaGruposRoles" />
+	</changeSet>
+
+	<changeSet id="TablaGruposRoles" author="SaGa">
+		<comment>
+			Tabla para almacenar los Roles de cada Grupo (Administración)
+		</comment>
+
+		<createTable schemaName="administracion" tableName="grupos_roles" remarks="Roles de los Grupos de Usuarios">
+			<column name="id_grupo" type="integer" remarks="Identificador del Grupo">
+				<constraints nullable="false" foreignKeyName="grupos_roles_fk_grupo" references="administracion.grupos(id_grupo)" />
+			</column>
+
+			<column name="rol" type="text" remarks="Nombre del Rol">
+				<constraints nullable="false" foreignKeyName="grupos_roles_fk_roles" references="administracion.roles(rol)" />
+			</column>
+		</createTable>
+
+		<addPrimaryKey schemaName="administracion" tableName="grupos_roles" constraintName="grupos_roles_pk" columnNames="id_grupo, rol" />
+
+	</changeSet>
+
+</databaseChangeLog>

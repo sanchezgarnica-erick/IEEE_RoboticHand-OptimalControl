@@ -1,0 +1,514 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content"> 
+        <div class="ui-g">
+            <div class="ui-g-12">
+            	<h:form>
+            		<p:panel header="Dashboard">
+	            		<p:panel header="Comunicación directa">
+	            			<p:panelGrid columns="2">
+	            				<p:outputLabel for="@next" value="Mensaje" style="font-weight: bold;" />
+	            				<p:inputText value="${mensaje}" size="30" />
+	            			</p:panelGrid>
+	            			
+		            		<f:facet name="footer">
+	            				<p:commandButton value="Enviar" action="publish" />
+	            				<p:commandButton value="Comando de Voz" onclick="PF('dialogoVozWV').show()" />
+	            			</f:facet>
+	            			
+	            		</p:panel>
+	            		
+	           			<p:separator />
+	           			
+	           			<p:panel header="Ajustar Set Point" rendered="false">
+	            			<p:panelGrid columns="5">
+	            				<p:outputLabel for="@next" value="Pulgar" style="font-weight: bold;" />
+	            				<p:outputLabel for="@next" value="Dedo Índice" style="font-weight: bold;" />
+	            				<p:outputLabel for="@next" value="Dedo Medio" style="font-weight: bold;" />
+	            				<p:outputLabel for="@next" value="Dedo Anular" style="font-weight: bold;" />
+	            				<p:outputLabel for="@next" value="Dedo Meñique" style="font-weight: bold;" />
+	            				
+	            				
+	            				<p:inputNumber id="sliderThumbSetPoint" value="${hand.thumb.setPoint}" />
+	            				<p:inputNumber id="sliderIndexFingerSetPoint" value="${hand.indexFinger.setPoint}" />
+	            				<p:inputNumber id="sliderMiddleFingerSetPoint" value="${hand.middleFinger.setPoint}" />
+	            				<p:inputNumber id="sliderRingFingerSetPoint" value="${hand.ringFinger.setPoint}" />
+	            				<p:inputNumber id="sliderLittleFingerSetPoint" value="${hand.littleFinger.setPoint}" />
+	            				
+	            				<p:slider minValue="0" maxValue="250" for="sliderThumbSetPoint">
+	            					<p:ajax event="slideEnd" onstart="actualizarSetPoint()" />
+	            				</p:slider>
+	            				<p:slider minValue="0" maxValue="310" for="sliderIndexFingerSetPoint">
+	            					<p:ajax event="slideEnd" onstart="actualizarSetPoint()" />
+	            				</p:slider>
+	            				<p:slider minValue="0" maxValue="310" for="sliderMiddleFingerSetPoint">
+	            					<p:ajax event="slideEnd" onstart="actualizarSetPoint()" />
+	            				</p:slider>
+	            				<p:slider minValue="0" maxValue="310" for="sliderRingFingerSetPoint">
+	            					<p:ajax event="slideEnd" onstart="actualizarSetPoint()" />
+	            				</p:slider>
+	            				<p:slider minValue="0" maxValue="310" for="sliderLittleFingerSetPoint">
+	            					<p:ajax event="slideEnd" onstart="actualizarSetPoint()" />
+	            				</p:slider>
+	            			</p:panelGrid>
+	            		</p:panel>
+	            		
+	            		<p:separator />
+	           			
+	           			<p:panel id="panelPID" header="Ajustar PID" rendered="false">
+	            			<p:panelGrid>
+	            				<p:row>
+	            					<p:column colspan="3" style="text-align:center;">
+	            						<h:outputText value="Pulgar" style="font-weight: bold; " />
+	            					</p:column>
+	            					<p:column colspan="3" style="text-align:center;">
+	            						<h:outputText value="Dedo Índice" style="font-weight: bold; " />
+	            					</p:column>
+	            					<p:column colspan="3" style="text-align:center;">
+	            						<h:outputText value="Dedo Medio" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column colspan="3" style="text-align:center;">
+	            						<h:outputText value="Dedo Anular" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column colspan="3" style="text-align:center;">
+	            						<h:outputText value="Dedo Meñique" style="font-weight: bold;" />
+	            					</p:column>
+	            				</p:row>
+	            				
+	            				<p:row>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kp" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Ki" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kd" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kp" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Ki" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kd" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kp" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Ki" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kd" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kp" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Ki" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kd" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kp" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Ki" style="font-weight: bold;" />
+	            					</p:column>
+	            					<p:column style="text-align:center;">
+	            						<h:outputText value="Kd" style="font-weight: bold;" />
+	            					</p:column>
+	            				</p:row>
+	            				
+	            				<p:row>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.thumb.kp}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.thumb.ki}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.thumb.kd}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.indexFinger.kp}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.indexFinger.ki}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.indexFinger.kd}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.middleFinger.kp}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.middleFinger.ki}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.middleFinger.kd}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.ringFinger.kp}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.ringFinger.ki}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.ringFinger.kd}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.littleFinger.kp}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.littleFinger.ki}" minValue="0.00" size="5" />
+	            					</p:column>
+	            					<p:column>
+	            						<p:inputNumber value="${hand.littleFinger.kd}" minValue="0.00" size="5" />
+	            					</p:column>
+	            				</p:row>
+	            			</p:panelGrid>
+	            			
+	            			<f:facet name="footer">
+	            				<p:commandButton value="Actualizar PID" action="actualizarPID" update="${p:resolveFirstComponentWithId('panelPID', view).clientId}" />
+	            			</f:facet>
+	            		</p:panel>
+	            		
+	            		<p:separator />
+	           			
+	           			<p:panel id="panelEsp32" header="SaGaHand (ESP32)">
+	           				<p:panelGrid>
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Actualización" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column colspan="5">
+	           							<h:outputText value="${hand.ultimaComunicacionTexto}" />
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Atributo" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="Pulgar" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="Dedo Índice" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="Dedo Medio" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="Dedo Anular" style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="Dedo Meñique" style="font-weight: bold" />
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="x(t): " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.state}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.state}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.state}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.state}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.state}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="u(t): " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.control}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.control}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.control}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.control}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.control}">
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Set Point: " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.setPoint}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.setPoint}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.setPoint}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.setPoint}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.setPoint}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="e(t): " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.error}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.error}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.error}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.error}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.error}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Kp: " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.kp}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.kp}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.kp}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.kp}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.kp}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Ki: " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.ki}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.ki}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.ki}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.ki}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.ki}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           					
+	           					<p:row>
+	           						<p:column>
+	           							<h:outputText value="Kd: " style="font-weight: bold" />
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.thumb.kd}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.indexFinger.kd}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.middleFinger.kd}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.ringFinger.kd}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           						<p:column>
+	           							<h:outputText value="${hand.littleFinger.kd}" >
+			           						<f:convertNumber minFractionDigits="2" />
+			           					</h:outputText>
+	           						</p:column>
+	           					</p:row>
+	           				</p:panelGrid>
+	           				
+	           				<f:facet name="footer">
+	           					<p:commandButton value="Verificar Estatus" action="checkStatus" oncomplete="actualizarPanelEsp32()" rendered="false" />
+	           				</f:facet>
+	           			</p:panel>
+           			</p:panel>
+            		
+            		<p:remoteCommand name="actualizarSetPoint" action="actualizarSetPoint" />
+            		<p:remoteCommand name="actualizarPID" action="actualizarPID" update="${p:resolveFirstComponentWithId('panelPID', view).clientId}" />
+            		<p:remoteCommand name="actualizarPanelEsp32" action="updateStatus" update="${p:resolveFirstComponentWithId('panelEsp32', view).clientId}" />
+            		<pe:timer widgetVar="handStatusTimmerWV" timeout="1" ontimercomplete="actualizarPanelEsp32()" singleRun="false" visible="false" />
+            		<pe:timer widgetVar="handPIDTimmerWV" timeout="10" ontimercomplete="actualizarPID()" visible="false" />
+            		
+            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            	</h:form>
+            	
+            	<h:form id="formVoz">
+            		<p:dialog widgetVar="dialogoVozWV" header="Enviar comando por voz">
+            			<p:panelGrid columns="2">
+            				<p:outputLabel for="@next" value="Comando" />
+            				<p:inputText id="inputComando" value="${comando}" size="50" />
+            			</p:panelGrid>
+            			<f:facet name="footer">
+            				<p:commandButton value="Dictar" onclick="startButton(event)" />
+            			</f:facet>
+            		</p:dialog>
+            		
+            		<p:remoteCommand name="ejecutarComando" action="ejecutarComando" onsuccess="PF('dialogoVozWV').hide()" />
+            		
+            		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            	</h:form>
+            </div>
+        </div>
+        
+        <script type="text/javascript">
+	        function startButton(event) {
+	   	  		final_transcript = '';
+	   	  		recognition.lang = 'es_MX';
+	   	  		recognition.start();
+	   	  	}
+	        
+	        var first_char = /\S/;
+	        function capitalize(s) {
+	          return s.replace(first_char, function(m) { return m.toUpperCase(); });
+	        }
+	        
+	        var two_line = /\n\n/g;
+	        var one_line = /\n/g;
+	        function linebreak(s) {
+	          return s.replace(two_line, '&lt;p&gt;&lt;/p&gt;').replace(one_line, '&lt;br&gt;');
+	        }
+	        
+        	var recognition = new webkitSpeechRecognition();
+       	  	//recognition.continuous = true;
+       	  	//recognition.interimResults = true;
+       	  	//recognition.onstart = function() {}
+       	  	  
+       	  	recognition.onresult = function(event) {
+			    var final_transcript = '';
+			    var interim_transcript = '';
+			    for (var i = event.resultIndex; i &lt; event.results.length; ++i) {
+			        if (event.results[i].isFinal) {
+			          final_transcript += event.results[i][0].transcript;
+			        } else {
+			          interim_transcript += event.results[i][0].transcript;
+			        }
+			      }
+			    final_transcript = capitalize(final_transcript);
+			    document.getElementById('${p:resolveFirstComponentWithId('inputComando', view).clientId}').value = linebreak(final_transcript);
+			    ejecutarComando();
+			  };
+
+       	  	//recognition.onerror = function(event) { ... }
+       	  	//recognition.onend = function() { ... }
+        </script>
+        
+    </ui:define>
+</ui:composition>

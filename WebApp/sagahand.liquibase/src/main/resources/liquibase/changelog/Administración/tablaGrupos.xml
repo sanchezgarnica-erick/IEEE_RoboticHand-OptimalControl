@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="TablaGruposTag" author="SaGa">
+		<tagDatabase tag="TablaGrupos" />
+	</changeSet>
+
+	<changeSet id="TablaGrupos" author="SaGa">
+		<comment>
+			Crear la tabla de Grupos del Sistema
+		</comment>
+
+		<createTable schemaName="administracion" tableName="grupos" remarks="Tabla de Grupos del Sistema">
+			<column name="id_grupo" type="serial" remarks="Identificador Único">
+				<constraints primaryKey="true" primaryKeyName="grupos_pk" />
+			</column>
+
+			<column name="grupo" type="text" remarks="Nombre del Grupo">
+				<constraints nullable="false" unique="true" uniqueConstraintName="grupos_uk_grupo" />
+			</column>
+
+			<column name="descripcion" type="text" remarks="Descripción del Grupo" />
+		</createTable>
+
+	</changeSet>
+
+	<changeSet id="SecuenciaGrupos" author="SaGa">
+		<sql dbms="postgresql">
+			ALTER SEQUENCE administracion.grupos_id_grupo_seq
+			RESTART WITH 100
+		</sql>
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/views/templates/default/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <h:form>
+                	<p:growl autoUpdate="true" />
+                	<p:focus for="${p:resolveFirstComponentWithId('inputNombre', view).clientId}" />
+                	<p:panel header="${grupo.id == null ? 'Agregar' : 'Editar'} Grupo">
+                		<p:panelGrid columns="2">
+                			<p:outputLabel value="Nombre" style="font-weight: bold;" />
+                			<p:inputText id="inputNombre" value="${grupo.nombre}" size="30" />
+                			<p:outputLabel value="Descripción" style="font-weight: bold;" />
+                			<p:inputText value="${grupo.descripcion}" size="50" />
+                		</p:panelGrid>
+                		
+                		<f:facet name="footer">
+                			<p:commandButton value="Guardar" action="guardar" icon="ui-icon-save" style="margin-right: 5px;" />
+                			<p:commandButton value="Cancelar" action="cancelar" icon="ui-icon-clear" immediate="true" style="margin-right: 5px;" />
+                		</f:facet>
+                	</p:panel>
+                	
+                	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </h:form>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

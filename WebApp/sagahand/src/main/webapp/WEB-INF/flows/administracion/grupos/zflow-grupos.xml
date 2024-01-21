@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://saganet.com.mx/webflow/spring-webflow-2.0.xsd">
+
+	<view-state id="listado">
+		<on-entry>
+			<evaluate expression="GruposC.modelo()" result="viewScope.modelo" />
+		</on-entry>
+		
+		<transition on="agregar" to="agregarEditar">
+			<evaluate expression="GruposC.nuevo()" result="requestScope.grupo" />
+		</transition>
+		
+		<transition on="editar" to="agregarEditar">
+			<set name="requestScope.grupo" value="viewScope.modelo.seleccionado" />
+		</transition>
+		
+		<transition on="editarRoles" to="editarRoles">
+			<set name="requestScope.grupo" value="viewScope.modelo.seleccionado" />
+		</transition>
+		
+		<transition on="editarUsuarios" to="editarUsuarios">
+			<set name="requestScope.grupo" value="viewScope.modelo.seleccionado" />
+		</transition>
+	</view-state>
+	
+	<view-state id="agregarEditar">
+		<on-entry>
+			<set name="viewScope.grupo" value="requestScope.grupo" />
+		</on-entry>
+		
+		<transition on="guardar" to="listado">
+			<evaluate expression="GruposC.guardar(viewScope.grupo)" />
+		</transition>
+		
+		<transition on="cancelar" to="listado" />
+	</view-state>
+	
+	<view-state id="editarRoles">
+		<on-entry>
+			<set name="viewScope.grupo" value="requestScope.grupo" />
+			<evaluate expression="RolesC.modeloPorGrupo(viewScope.grupo)" result="viewScope.modeloRolesGrupo" />
+			<evaluate expression="RolesC.modelo(viewScope.modeloRolesGrupo.listado)" result="viewScope.modeloRoles" />
+		</on-entry>
+		
+		<transition on="agregarRol">
+			<evaluate expression="GruposC.agregarRol(viewScope.modeloRolesGrupo, viewScope.modeloRoles.seleccionado)" />
+			<evaluate expression="viewScope.modeloRoles.quitarElemento(viewScope.modeloRoles.seleccionado)" />
+		</transition>
+		
+		<transition on="eliminarRol">
+			<evaluate expression="viewScope.modeloRoles.agregarElemento(viewScope.modeloRolesGrupo.seleccionado, true, true)" />
+			<evaluate expression="viewScope.modeloRolesGrupo.quitarElemento(viewScope.modeloRolesGrupo.seleccionado)" />
+		</transition>
+		
+		<transition on="guardar" to="listado">
+			<evaluate expression="GruposC.guardarRoles(viewScope.grupo, viewScope.modeloRolesGrupo.listado)" />
+		</transition>
+		
+		<transition on="cancelar" to="listado" />
+	</view-state>
+	
+	<view-state id="editarUsuarios">
+		<on-entry>
+			<set name="viewScope.grupo" value="requestScope.grupo" />
+			<evaluate expression="UsuariosC.modeloPorGrupo(viewScope.grupo)" result="viewScope.modeloUsuariosGrupo" />
+			<evaluate expression="UsuariosC.modelo()" result="viewScope.modeloUsuarios" />
+		</on-entry>
+		
+		<transition on="agregarUsuario">
+			<evaluate expression="GruposC.agregarUsuario(viewScope.modeloUsuariosGrupo, viewScope.modeloUsuarios.seleccionado)" />
+			<evaluate expression="viewScope.modeloUsuarios.quitarElemento(viewScope.modeloUsuarios.seleccionado)" />
+		</transition>
+		
+		<transition on="eliminarUsuario">
+			<evaluate expression="viewScope.modeloUsuarios.agregarElemento(viewScope.modeloUsuariosGrupo.seleccionado, true, true)" />
+			<evaluate expression="viewScope.modeloUsuariosGrupo.quitarElemento(viewScope.modeloUsuariosGrupo.seleccionado)" />
+		</transition>
+		
+		<transition on="guardar" to="listado">
+			<evaluate expression="GruposC.guardarUsuarios(viewScope.grupo, viewScope.modeloUsuariosGrupo.listado)" />
+		</transition>
+		
+		<transition on="cancelar" to="listado" />
+	</view-state>
+	
+</flow>

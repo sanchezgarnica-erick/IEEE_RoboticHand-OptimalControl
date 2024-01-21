@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+   http://www.liquibase.org/xml/ns/dbchangelog 
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="TablaRolesTag" author="SaGa">
+		<tagDatabase tag="TablaRoles" />
+	</changeSet>
+
+	<changeSet id="TablaRoles" author="SaGa">
+		<comment>
+			Crear la tabla de Roles del Sistema
+		</comment>
+
+		<createTable schemaName="administracion" tableName="roles" remarks="Tabla de Roles del Sistema">
+			<column name="id_rol" type="serial" remarks="Identificador Único">
+				<constraints primaryKey="true" primaryKeyName="roles_pk" />
+			</column>
+
+			<column name="rol" type="text" remarks="Nombre del Rol">
+				<constraints nullable="false" unique="true" uniqueConstraintName="roles_uk_rol" />
+			</column>
+
+			<column name="descripcion" type="text" remarks="Descripción del Rol" />
+		</createTable>
+
+		<createIndex indexName="roles_ix_rol" schemaName="administracion" tableName="roles" unique="true">
+			<column name="rol" />
+		</createIndex>
+
+	</changeSet>
+
+</databaseChangeLog>
