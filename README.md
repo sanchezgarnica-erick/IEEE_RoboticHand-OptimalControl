@@ -1,8 +1,8 @@
 # Resources for the manuscript "Optimal Control and Grasping for a Robotic Hand with a Non-linked Double Tendon Arrangement"
 ![Graphic Abstract](https://github.com/sanchezgarnica-erick/IEEE_RoboticHand-OptimalControl/blob/main/ProjectImages/graphicAbstract_v2.png)
 
-El proyecto presentado en el artículo utiliza:
-- El brazo derecho del modelo [Inmoov](https://inmoov.fr/), colocando los dedos en una arreglo de doble tendón no ligado.
+The project presented in the article uses:
+- The right arm of the [Inmoov](https://inmoov.fr/), positioning the fingers in a non-linked double tendon arrangement
 - Unidades de Medición Inercial para determinar la posición de los dedos.
 -  Servomotores como actuadores para los dedos.
 - Una interfaz para intercambio de mensajes mediante el protocolo MQTT con la finalidad de recibir comandos de voz desde una aplicación web
@@ -25,6 +25,7 @@ La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolad
 - *utils.h* [Línea 4]: Número de pin del sensor de fuerza.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU0NTI4NDQxMywxMzIzMDkzMjE4LDEyMD
-Y5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4ODNdfQ==
+eyJoaXN0b3J5IjpbLTI5NDMwODM2OCwxNTQ1Mjg0NDEzLDEzMj
+MwOTMyMTgsMTIwNjk5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4
+M119
 -->
