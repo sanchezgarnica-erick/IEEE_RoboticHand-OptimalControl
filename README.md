@@ -6,12 +6,12 @@ The project presented in the article uses:
 - Inertial Measurement Units to determine the finger positions.
 -  Servo motors as actuators for the fingers.
 - An interface for message exchange using the MQTT protocol to receive voice commands from a web application.
-- El movimiento de los dedos está condicionado por un controlador PI óptimo.
+- Finger movements are controlled by an optimal PI controller.
 
-Para lograr lo anterior se utiliza el microcontrolador ESP32, en el cual se aplicaron técnicas de programación multitarea en paralelo.
-La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolador, en los cuales hay que actualizar la siguiente información:
-- *mpu6050Functions.cpp* [línea 73-112]: Offsets de las IMUs por cada dedo.
-- *mqttFunctions.cpp* [Línea 17.20]: Tópicos suscriptor y publicador, así como usuario y password para el servidor MQTT.
+To achieve the above, the ESP32 microcontroller is used, applying parallel multitasking programming techniques. The ESP32 folder contains the files that need to be installed on the microcontroller, where the following information needs to be updated:
+
+- *mpu6050Functions.cpp* [lines 73-112]: Offsets de las IMUs por cada dedo.
+- *mqttFunctions.cpp* [lines 17.20]: Tópicos suscriptor y publicador, así como usuario y password para el servidor MQTT.
 	* La Función onMqttMessage* [Línea 123]: Aquí se encuentran definidos los códigos de los comandos que puede ejecutar el prototipo. 
 		+ *a*: Envío del estatus actual del sistema.
 		+ *b*: Envío de los valores actuales de las variables.
@@ -25,7 +25,7 @@ La carpeta ESP32 contiene los archivos que deben instalarse en el microcontrolad
 - *utils.h* [Línea 4]: Número de pin del sensor de fuerza.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEwMjM5OTU1NCwxNTQ1Mjg0NDEzLDEzMj
-MwOTMyMTgsMTIwNjk5MDY5Miw3OTc1NjE2OCwtMTM1NTEyNDg4
-M119
+eyJoaXN0b3J5IjpbLTE2NjA5NjcwMzksMTU0NTI4NDQxMywxMz
+IzMDkzMjE4LDEyMDY5OTA2OTIsNzk3NTYxNjgsLTEzNTUxMjQ4
+ODNdfQ==
 -->
